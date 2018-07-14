@@ -1,12 +1,16 @@
 import pandas as pd
 from sklearn import linear_model,model_selection,metrics
 import math
+
+# 1. Data
 house_train=pd.read_csv('C:/Manidhar/MachineLearningLab/datasets/HomePrice/train.csv')
+
+# 2. EDA
 house_train.info()
 house_train.shape
 
 
-# Preprocessing
+# 3. Preprocessing [Filling the missing data (Imputation), converting categoric to continious using onehot encodeing, Data normalization or standardization, Data Transformation]
 # MSSubclass, Street need to convert this into onehot as it is categoric
 
 cat_to_continues=['MSSubClass','Street']
@@ -22,7 +26,7 @@ for f1 in features1:
     house_train[f1]=house_train[f1].map(mappings)
     house_train.loc[house_train[f1].isnull() == True,f1]=0
 
-# FE
+# 4. Feature Engineering [Feature selection based on feature importance, Filtering features,Create new features if required, transforming of features]
 dims=['LotArea','OverallQual','OverallCond','MSSubClass_20', 'MSSubClass_30', 'MSSubClass_40', 'MSSubClass_45',
        'MSSubClass_50', 'MSSubClass_60', 'MSSubClass_70', 'MSSubClass_75',
        'MSSubClass_80', 'MSSubClass_85', 'MSSubClass_90', 'MSSubClass_120',
@@ -35,13 +39,13 @@ X_train=house_train[dims]
 X_train.info()
 y_train=house_train['SalePrice']
 
-# Model Building
+# 5. Model Building
 mylr=linear_model.LinearRegression()
-
 mylr.fit(X_train,y_train)
-
 mylr.coef_
 mylr.intercept_
+
+# 6. Model Evaluation
 
 # estimators will have scoring funciton
 # Resubstitution strategy. Score is calculated using explained variance
