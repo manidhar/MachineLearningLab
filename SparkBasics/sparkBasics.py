@@ -1,0 +1,30 @@
+from pyspark.sql import SparkSession
+spark=SparkSession.builder.getOrCreate()
+print(spark)
+data=[('John','Smith',47),
+     ('James','Smith',27),
+     ('Keith','Maren',38)]
+header1=['fname','lname','age']
+df1=spark.createDataFrame(data,header1)
+df1.show(n=2)
+df1.first()
+df1.count()
+df1.coalesce(1).write.csv('c:/manidhar/MachineLearningLab/SparkBasics/sampleData')
+df1.printSchema()
+df1.show()
+df2=spark.read.csv('C:/Manidhar/MachineLearningLab/datasets/titanic/train.csv',header=True)
+df2.count()
+df2.show()
+df2.show(n=30)
+df2.show(40)
+df2.describe()
+df2.dtypes
+df3=df2.select('Pclass','SibSp','Survived','Fare')
+df3.show()
+df4=df2.filter(df2.Age>20).select('Pclass','SibSp','Survived')
+df4.show()
+df4.count()
+df3.printSchema()
+df3=df2.select(df3.Pclass.cast('double'),df3.SibSp.cast('double'),df3.Survived.cast('double'),df3.Fare.cast('double'))
+df3.printSchema()
+df3.dtypes
